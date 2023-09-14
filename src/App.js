@@ -1,24 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Container, Box } from "@mui/material";
+import { useUser } from "@supabase/auth-helpers-react";
+
+import MagicLink from "./MagicLink";
+import SignOut from "./signOut";
+import Upload from "./upload";
 
 function App() {
+  const user = useUser();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container fixed>
+      <Box
+        sx={{
+          bgcolor: "#cfe8fc",
+          height: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        {user === null ? (
+          <>
+            <h1>Welcome to Image Wall</h1>
+            <MagicLink />
+          </>
+        ) : (
+          <>
+            <h1>
+              You Image wall {user.email} <SignOut />
+            </h1>
+            <Upload />
+          </>
+        )}
+      </Box>
+    </Container>
   );
 }
 
